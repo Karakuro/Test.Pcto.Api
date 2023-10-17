@@ -20,6 +20,7 @@ namespace Test.Pcto.Api.Controllers
         }
 
         [HttpGet]
+        // /api/tutor
         public IActionResult GetAll()
         {
             #region OLD
@@ -46,6 +47,20 @@ namespace Test.Pcto.Api.Controllers
 
             List<Tutor> tutors = _ctx.Tutors.ToList();
             return Ok(tutors);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        // /api/Tutor/1
+        public IActionResult Get(int id)
+        {
+            Tutor? t = _ctx.Tutors.SingleOrDefault(x => x.TutorId == id);
+            if (t == null)
+            {
+                return NotFound($"Tutor not found with id: {id}");
+            }
+
+            return Ok(t);
         }
 
         [HttpPost]
